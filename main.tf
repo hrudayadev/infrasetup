@@ -22,7 +22,7 @@ resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
 resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   cidr_block = "172.16.0.0/24"
-  map_public_ip_on_lunch = true
+  map_public_ip_on_launch = true
   availability_zone = "us-east-2c"
   tags {
       Name = "Indusface_Interview_Public_Subnet"
@@ -32,7 +32,7 @@ resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
 resource "aws_subnet" "Indusface_Interview_Private_Subnet" {
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   cidr_block = "172.16.1.0/24"
-  map_public_ip_on_lunch = false
+  map_public_ip_on_launch = false
   availability_zone = "us-east-2c"
   tags {
       Name = "Indusface_Interview_Private_Subnet"
