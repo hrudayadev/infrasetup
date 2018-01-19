@@ -65,7 +65,7 @@ resource "aws_route_table"  "Indusface_Interview_Public_Route_Table"  {
 
 
 
-resource "aws_default_route_table" "Indusface_Interview_Private_Route_Table"  {
+resource "aws_route_table" "Indusface_Interview_Private_Route_Table"  {
  default_route_table_id = "${aws_vpc.vpc.default_route_table_id}"
 
  route {
