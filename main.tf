@@ -70,7 +70,7 @@ resource "aws_default_route_table" "Indusface_Interview_Private_Route_Table"  {
 
  route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = "${aws_nat_gateway.Indusface_Interview_Public_Route_Table.id}"
+        gateway_id = "${aws_nat_gateway.Indusface_Interview_Private_Route_Table.id}"
        }
  tags {
        Name  = "Indusface_Interview_Private_Route_Table"
