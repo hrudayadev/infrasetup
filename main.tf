@@ -56,7 +56,7 @@ resource "aws_route_table"  "Indusface_Interview_Public_Route_Table"  {
  vpc_id = "${aws_vpc.pvc.id}"
  route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = "${aws_internet_gateway.internet_gateway.id}"
+        gateway_id = "${aws_internet_gateway.Indusface_Interview_Internet_Gateway.id}"
        }
  tags {
        Name = "Indusface_Interview_Public_Route_Table"
@@ -70,7 +70,7 @@ resource "aws_route_table" "Indusface_Interview_Private_Route_Table"  {
 
  route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = "${aws_nat_gateway.Indusface_Interview_Private_Route_Table.id}"
+        gateway_id = "${aws_nat_gateway.Indusface_Interview_NAT_Gateway.id}"
        }
  tags {
        Name  = "Indusface_Interview_Private_Route_Table"
