@@ -101,59 +101,68 @@ resource "aws_route_table_association" "Indusface_Interview_Private_Subnet" {
 
 # Security Group 
 
-
-resource "aws_security_group" "public" {
-  name = "Indusface_Interview_Public_SG"
-  description = "used for public and private instances for LB"
+resource "aws_network_acl" "Indusface_Interview_Public_SG" {
   vpc_id = "${aws_vpc.vpc.id}"
- 
-  ingress {
-     from_port = 22
-     to_port = 22
-     protocol = "tcp"
-     cidr_block = ["0.0.0.0/0"]
-}
-  ingress {
-     from_port = 80
-     to_port = 80
-     protocol = "tcp"
-     cidr_block = ["0.0.0.0/0"]
-}
+  subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
 
-ingress {
-     from_port = 443
-     to_port = 443
-     protocol = "tcp"
-     cidr_block = ["0.0.0.0/0"]
-}
+  ingress = {
+    protocol = "tcp"
+    rule_no = 100
+    action = "allow"
+    cidr_block =  "0.0.0.0/0"
+    from_port = 80
+    to_port = 80
+  }
+  ingress {
+    from_port   = 80
+    to_port   = 80
+    protocol  = "tcp"
+	rule_no = 100
+    cidr_blocks = ["0.0.0.0/0"]
+  }ingress = {
+    protocol = "tcp"
+    rule_no = 102
+    action = "allow"
+    cidr_block =  "0.0.0.0/0"
+    from_port = 443
+    to_port = 443
+  }
   
-}
+} 
 
-resource "aws_security_group" "private" {
-  name = "Indusface_Interview_Private_SG"
-  description = "used private instances "
+resource "aws_network_acl" "Indusface_Interview_Private_SG" {
   vpc_id = "${aws_vpc.vpc.id}"
- 
-  ingress {
-     from_port = 22
-     to_port = 22
-     protocol = "tcp"
-     cidr_block = ["172.16.0.0/0"]
-}
-  ingress {
-     from_port = 80
-     to_port = 80
-     protocol = "tcp"
-     cidr_block = ["172.16.0.0/0"]
-}
+  subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
 
-ingress {
-     from_port = 443
-     to_port = 443
-     protocol = "tcp"
-     cidr_block = ["172.16.0.0/0"]
-}
-}
+  ingress = {
+    protocol = "tcp"
+    rule_no = 100
+    action = "allow"
+    cidr_block =  "172.16.0.0/0"
+    from_port = 80
+    to_port = 80
+  }
+  ingress {
+    from_port   = 80
+    to_port   = 80
+    protocol  = "tcp"
+	rule_no = 100
+    cidr_blocks = "172.16.0.0/0"
+  }
+  ingress = {
+    protocol = "tcp"
+    rule_no = 102
+    action = "allow"
+    cidr_block =  "172.16.0.0/0"
+    from_port = 443
+    to_port = 443
+  }
+  
+} 
+
+
+
+
 
 
 # kep pair
