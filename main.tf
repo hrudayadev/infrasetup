@@ -49,9 +49,7 @@ resource "aws_nat_gateway" "Indusface_Interview_NAT_Gateway" {
     allocation_id = "${aws_eip.elastic_eip.id}"
     subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
     depends_on = ["aws_internet_gateway.Indusface_Interview_Internet_Gateway"]
-    tags {
-      Name = "Indusface_Interview_NAT_Gateway"
-}
+    
 }
 
 resource "aws_route_table"  "Indusface_Interview_Public_Route_Table"  {
@@ -109,13 +107,37 @@ resource "aws_network_acl" "Indusface_Interview_Public_SG" {
     from_port = 80
     to_port = 80
   }
-  ingress {
-    from_port   = 80
-    to_port   = 80
-    protocol  = "tcp"
-	rule_no = 100
-    cidr_blocks = ["0.0.0.0/0"]
-  }ingress = {
+
+  ingress = {
+    protocol = "tcp"
+    rule_no = 101
+    action = "allow"
+    cidr_block =  "0.0.0.0/0"
+    from_port = 443
+    to_port = 443
+  }
+
+  ingress = {
+    protocol = "tcp"
+    rule_no = 102
+    action = "allow"
+    cidr_block =  "0.0.0.0/0"
+    from_port = 22
+    to_port = 22
+  }
+
+  
+
+  egress = {
+    protocol = "tcp"
+    rule_no = 101
+    action = "allow"
+    cidr_block =  "0.0.0.0/0"
+    from_port = 80
+    to_port = 80
+  }
+
+  egress = {
     protocol = "tcp"
     rule_no = 102
     action = "allow"
@@ -123,14 +145,25 @@ resource "aws_network_acl" "Indusface_Interview_Public_SG" {
     from_port = 443
     to_port = 443
   }
+
+  egress = {
+    protocol = "tcp"
+    rule_no = 103
+    action = "allow"
+    cidr_block =  "0.0.0.0/0"
+    from_port = 22
+    to_port = 22
+  }
+}
   
-} 
+ 
 
 resource "aws_network_acl" "Indusface_Interview_Private_SG" {
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
 
-  ingress = {
+
+   ingress = {
     protocol = "tcp"
     rule_no = 100
     action = "allow"
@@ -138,14 +171,37 @@ resource "aws_network_acl" "Indusface_Interview_Private_SG" {
     from_port = 80
     to_port = 80
   }
-  ingress {
-    from_port   = 80
-    to_port   = 80
-    protocol  = "tcp"
-	rule_no = 100
-    cidr_blocks = "172.16.0.0/0"
-  }
+
   ingress = {
+    protocol = "tcp"
+    rule_no = 101
+    action = "allow"
+    cidr_block =  "172.16.0.0/0"
+    from_port = 443
+    to_port = 443
+  }
+
+  ingress = {
+    protocol = "tcp"
+    rule_no = 102
+    action = "allow"
+    cidr_block =  "172.16.0.0/0"
+    from_port = 22
+    to_port = 22
+  }
+
+  
+
+  egress = {
+    protocol = "tcp"
+    rule_no = 101
+    action = "allow"
+    cidr_block =  "172.16.0.0/0"
+    from_port = 80
+    to_port = 80
+  }
+
+  egress = {
     protocol = "tcp"
     rule_no = 102
     action = "allow"
@@ -153,9 +209,16 @@ resource "aws_network_acl" "Indusface_Interview_Private_SG" {
     from_port = 443
     to_port = 443
   }
-  
-} 
 
+  egress = {
+    protocol = "tcp"
+    rule_no = 103
+    action = "allow"
+    cidr_block =  "172.16.0.0/0"
+    from_port = 22
+    to_port = 22
+  }
+}
 
 
 
