@@ -12,7 +12,7 @@ resource "aws_vpc" "Indusface_Interview_VPC" {
 resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
  vpc_id = "{aws_vpc.vpc.id}"
  tags {
-      Name = "Indusface_Interview_Private_Subnet"
+      Name = "Indusface_Interview_Internet_Gateway"
 }
 }
 
