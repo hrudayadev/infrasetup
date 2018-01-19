@@ -245,7 +245,7 @@ resource "aws_eip" "instance_eip" {
 
 resource "aws_instance" "Indusface_Interview_Load_Balancer" {
   instance_type = "t2.micro"
-  ami = "ami-5d055232"
+  ami = "ami-2581aa40"
 
 root_block_device {
  volume_type = "gp2"
@@ -264,7 +264,7 @@ root_block_device {
 
 resource "aws_instance" "Indusface_Interview_Web_Server" {
   instance_type = "t2.micro"
-  ami = "ami-5d055232"
+  ami = "ami-2581aa40"
 root_block_device {
  volume_type = "gp2"
  volume_size = "20"
