@@ -1,5 +1,5 @@
 variable "aws_region" {}
-variable "aws_prfile" {}
+variable "aws_profile" {}
 variable "db_instance_class" {}
 variable "dbname" {}
 variable "dbuser" {}
