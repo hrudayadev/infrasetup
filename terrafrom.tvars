@@ -1,5 +1,5 @@
 aws_profile = "creds"
-aws_region = "ap-south-1"
+aws_region = "us-east-2"
 db_instance_class = "db.t1.micro"
 dbname = "testdb"
 dbuser = "admin"
