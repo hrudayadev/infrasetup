@@ -21,7 +21,7 @@ resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
   vpc_id = "${aws_vpc.vpc.id}"
   cidr_blcok = "172.16.0.0/24"
   map_public_ip_on_lunch = true
-  availability_zone = "ap-south-1b"
+  availability_zone = "us-east-2c"
   tags {
       Name = "Indusface_Interview_Public_Subnet"
 }
@@ -31,7 +31,7 @@ resource "aws_subnet" "Indusface_Interview_Private_Subnet" {
   vpc_id = "${aws_vpc.vpc.id}"
   cidr_blcok = "172.16.1.0/24"
   map_public_ip_on_lunch = false
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-2c"
   tags {
       Name = "Indusface_Interview_Private_Subnet"
 }
@@ -70,7 +70,7 @@ resource "aws_default_route_table" "Indusface_Interview_Private_Route_Table"  {
 
  route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = "${aws_nat_gatewayIndusface_Interview_Public_Route_Table.id}"
+        gateway_id = "${aws_nat_gateway.Indusface_Interview_Public_Route_Table.id}"
        }
  tags {
        Name  = "Indusface_Interview_Private_Route_Table"
