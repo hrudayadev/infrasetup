@@ -16,6 +16,12 @@ resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
 }
 }
 
+resource "aws_route" "internet_access" {
+  route_table_id         = "${aws_vpc.vpc.main_route_table_id}"
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = "${aws_internet_gateway.Indusface_Interview_Internet_Gateway.id}"
+}
+
 
 resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
   vpc_id = "${aws_vpc.vpc.id}"
@@ -66,22 +72,25 @@ resource "aws_route_table"  "Indusface_Interview_Public_Route_Table"  {
 
 
 resource "aws_route_table" "Indusface_Interview_Private_Route_Table"  {
- default_route_table_id = "${aws_vpc.vpc.default_route_table_id}"
+ vpc_id = "${aws_vpc.vpc.id}"
 
- route {
-        cidr_block = "0.0.0.0/0"
-        gateway_id = "${aws_nat_gateway.Indusface_Interview_NAT_Gateway.id}"
-       }
+ 
  tags {
        Name  = "Indusface_Interview_Private_Route_Table"
 }
+}
+
+resource "aws_route" "private_route" {
+	route_table_id  = "${aws_route_table.Indusface_Interview_NAT_Gateway.id}"
+	destination_cidr_block = "0.0.0.0/0"
+	nat_gateway_id = "${aws_nat_gateway.Indusface_Interview_NAT_Gateway.id}"
 }
 
 # Subnet Associations
 
 resource "aws_route_table_association" "public_assoc" {
   subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
-  route_table_id = "${aws_route_table.Indusface_Interview_Public_Route_Table.id}"
+  route_table_id = "${aws_route_table.main_route_table_id}"
 }
 
 resource "aws_route_table_association" "private_assoc" {
