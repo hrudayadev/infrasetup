@@ -17,7 +17,7 @@ resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
 }
 
 resource "aws_route" "internet_access" {
-  route_table_id         = "${aws_vpc.vpc.main_route_table_id}"
+  route_table_id         = "${aws_vpc.main_route_table_id}"
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.Indusface_Interview_Internet_Gateway.id}"
 }
@@ -102,7 +102,7 @@ resource "aws_route_table_association" "Indusface_Interview_Private_Subnet" {
 # Security Group 
 
 resource "aws_network_acl" "Indusface_Interview_Public_SG" {
-  vpc_id = "${aws_vpc.vpc.id}"
+  vpc_id = "${aws_vpc.default.id}"
   subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
 
   ingress = {
@@ -131,7 +131,7 @@ resource "aws_network_acl" "Indusface_Interview_Public_SG" {
 } 
 
 resource "aws_network_acl" "Indusface_Interview_Private_SG" {
-  vpc_id = "${aws_vpc.vpc.id}"
+  vpc_id = "${aws_vpc.default.id}"
   subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
 
   ingress = {
