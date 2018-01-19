@@ -7,6 +7,9 @@ provider "aws" {
 
 resource "aws_vpc" "Indusface_Interview_VPC" {
   cidr_block = "172.16.0.0/16"
+  tags = {
+    Name = "Indusface_Interview_VPC"
+  }
 }
 
 resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
