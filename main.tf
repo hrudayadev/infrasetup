@@ -10,7 +10,7 @@ resource "aws_vpc" "Indusface_Interview_VPC" {
 }
 
 resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
- vpc_id = "{aws_vpc.vpc.id}"
+ vpc_id = "{aws_vpc.Indusface_Interview_VPC.id}"
  tags {
       Name = "Indusface_Interview_Internet_Gateway"
 }
@@ -20,7 +20,7 @@ resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
 
 
 resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
-  vpc_id = "${aws_vpc.vpc.id}"
+  vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   cidr_blcok = "172.16.0.0/24"
   map_public_ip_on_lunch = true
   availability_zone = "us-east-2c"
@@ -30,7 +30,7 @@ resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
 } 
 
 resource "aws_subnet" "Indusface_Interview_Private_Subnet" {
-  vpc_id = "${aws_vpc.vpc.id}"
+  vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   cidr_blcok = "172.16.1.0/24"
   map_public_ip_on_lunch = false
   availability_zone = "us-east-2c"
@@ -55,7 +55,7 @@ resource "aws_nat_gateway" "Indusface_Interview_NAT_Gateway" {
 }
 
 resource "aws_route_table"  "Indusface_Interview_Public_Route_Table"  {
- vpc_id = "${aws_vpc.pvc.id}"
+ vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
  route {
         cidr_block = "0.0.0.0/0"
         gateway_id = "${aws_internet_gateway.Indusface_Interview_Internet_Gateway.id}"
@@ -68,7 +68,7 @@ resource "aws_route_table"  "Indusface_Interview_Public_Route_Table"  {
 
 
 resource "aws_route_table" "Indusface_Interview_Private_Route_Table"  {
- vpc_id = "${aws_vpc.vpc.id}"
+ vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
 
  
  tags {
@@ -98,7 +98,7 @@ resource "aws_route_table_association" "Indusface_Interview_Private_Subnet" {
 # Security Group 
 
 resource "aws_network_acl" "Indusface_Interview_Public_SG" {
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
 
   ingress = {
@@ -127,7 +127,7 @@ resource "aws_network_acl" "Indusface_Interview_Public_SG" {
 } 
 
 resource "aws_network_acl" "Indusface_Interview_Private_SG" {
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
 
   ingress = {
