@@ -81,7 +81,7 @@ resource "aws_route_table" "Indusface_Interview_Private_Route_Table"  {
 }
 
 resource "aws_route" "private_route" {
-	route_table_id  = "${aws_route_table.Indusface_Interview_NAT_Gateway.id}"
+	route_table_id  = "${aws_route_table.Indusface_Interview_Private_Route_Table.id}"
 	destination_cidr_block = "0.0.0.0/0"
 	nat_gateway_id = "${aws_nat_gateway.Indusface_Interview_NAT_Gateway.id}"
 }
