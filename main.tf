@@ -88,12 +88,12 @@ resource "aws_route" "private_route" {
 
 # Subnet Associations
 
-resource "aws_route_table_association" "public_assoc" {
+resource "aws_route_table_association" "Indusface_Interview_Public_Subnet" {
   subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
   route_table_id = "${aws_route_table.vpc.main_route_table_id}"
 }
 
-resource "aws_route_table_association" "private_assoc" {
+resource "aws_route_table_association" "Indusface_Interview_Private_Subnet" {
   subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
   route_table_id = "${aws_route_table.Indusface_Interview_Private_Route_Table.id}"
 }
