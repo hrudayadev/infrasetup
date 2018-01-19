@@ -21,7 +21,7 @@ resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
 
 resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
-  cidr_blcok = "172.16.0.0/24"
+  cidr_block = "172.16.0.0/24"
   map_public_ip_on_lunch = true
   availability_zone = "us-east-2c"
   tags {
@@ -31,7 +31,7 @@ resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
 
 resource "aws_subnet" "Indusface_Interview_Private_Subnet" {
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
-  cidr_blcok = "172.16.1.0/24"
+  cidr_block = "172.16.1.0/24"
   map_public_ip_on_lunch = false
   availability_zone = "us-east-2c"
   tags {
