@@ -144,4 +144,50 @@ resource "aws_key_pair" "auth" {
 }
 
 
+# server
+
+resource "aws_eip" "instance_eip" {
+  vpc      = true
+  depends_on = ["aws_internet_gateway.Indusface_Interview_Internet_Gateway"]
+} 
+
+
+resource "aws_instance" "Indusface_Interview_Load_Balancer" {
+  instance_type = "${var.Indusface_Interview_Load_Balancer_instance_type}"
+  ami = "${var.Indusface_Interview_Load_Balancer_ami}"
+
+root_block_device {
+ volume_type = "gp2"
+ volume_size = "20"
+ delete_on_termination = "true"
+}
+  tags {
+    Name = "Indusface_Interview_Load_Balancer"
+  }
+
+  key_name = "${aws_key_pair.auth.id}"
+  vpc_security_group_ids = ["${aws_security_group.public.id}"]
+  subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
+
+}
+
+resource "aws_instance" "Indusface_Interview_Web_Server" {
+  instance_type = "${var.Indusface_Interview_Load_Balancer_instance_type}"
+  ami = "${var.Indusface_Interview_Web_Server_ami}"
+root_block_device {
+ volume_type = "gp2"
+ volume_size = "20"
+ delete_on_termination = "true"
+}
+  tags {
+    Name = "Indusface_Interview_Web_Server"
+  }
+
+  key_name = "${aws_key_pair.auth.id}"
+  vpc_security_group_ids = ["${aws_security_group.private.id}"]
+  subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
+
+}
+
+
 
