@@ -37,7 +37,7 @@ resource "aws_subnet" "Indusface_Interview_Private_Subnet" {
 }
 }
 
-resource "aws_eip" "elastis_eip" {
+resource "aws_eip" "elastic_eip" {
   vpc      = true
   depends_on = ["aws_internet_gateway.Indusface_Interview_Internet_Gateway"]
 } 
