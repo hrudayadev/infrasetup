@@ -195,7 +195,7 @@ root_block_device {
   }
 
   key_name = "${aws_key_pair.auth.id}"
-  vpc_security_group_ids = ["${aws_security_group.public.id}"]
+  
   subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
 
 }
@@ -213,7 +213,7 @@ root_block_device {
   }
 
   key_name = "${aws_key_pair.auth.id}"
-  vpc_security_group_ids = ["${aws_security_group.private.id}"]
+  
   subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
 
 }
