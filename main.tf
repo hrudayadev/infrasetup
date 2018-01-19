@@ -77,6 +77,17 @@ resource "aws_default_route_table" "Indusface_Interview_Private_Route_Table"  {
 }
 }
 
+# Subnet Associations
+
+resource "aws_route_table_association" "public_assoc" {
+  subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
+  route_table_id = "${aws_route_table.Indusface_Interview_Public_Route_Table.id}"
+}
+
+resource "aws_route_table_association" "private_assoc" {
+  subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
+  route_table_id = "${aws_route_table.Indusface_Interview_Private_Route_Table.id}"
+}
 
 
 # Security Group 
