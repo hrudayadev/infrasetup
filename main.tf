@@ -90,7 +90,7 @@ resource "aws_route" "private_route" {
 
 resource "aws_route_table_association" "public_assoc" {
   subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
-  route_table_id = "${aws_route_table.main_route_table_id}"
+  route_table_id = "${aws_route_table.vpc.main_route_table_id}"
 }
 
 resource "aws_route_table_association" "private_assoc" {
