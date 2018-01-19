@@ -16,11 +16,7 @@ resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
 }
 }
 
-resource "aws_route" "internet_access" {
-  route_table_id         = "${aws_vpc.main_route_table_id}"
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.Indusface_Interview_Internet_Gateway.id}"
-}
+
 
 
 resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
