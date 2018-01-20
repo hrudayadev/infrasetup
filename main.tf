@@ -26,7 +26,7 @@ resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   cidr_block = "172.16.0.0/24"
   map_public_ip_on_launch = true
-  availability_zone = "us-east-2c"
+  availability_zone = "ap-south-1a"
   tags {
       Name = "Indusface_Interview_Public_Subnet"
 }
@@ -36,7 +36,7 @@ resource "aws_subnet" "Indusface_Interview_Private_Subnet" {
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   cidr_block = "172.16.1.0/24"
   map_public_ip_on_launch = false
-  availability_zone = "us-east-2c"
+  availability_zone = "ap-south-1a"
   tags {
       Name = "Indusface_Interview_Private_Subnet"
 }
@@ -170,7 +170,7 @@ resource "aws_network_acl" "Indusface_Interview_Private_SG" {
     protocol = "tcp"
     rule_no = 100
     action = "allow"
-    cidr_block =  "172.16.0.0/0"
+    cidr_block =  "0.0.0.0/0"
     from_port = 80
     to_port = 80
   }
@@ -179,7 +179,7 @@ resource "aws_network_acl" "Indusface_Interview_Private_SG" {
     protocol = "tcp"
     rule_no = 101
     action = "allow"
-    cidr_block =  "172.16.0.0/0"
+    cidr_block =  "0.0.0.0/0"
     from_port = 443
     to_port = 443
   }
@@ -188,7 +188,7 @@ resource "aws_network_acl" "Indusface_Interview_Private_SG" {
     protocol = "tcp"
     rule_no = 102
     action = "allow"
-    cidr_block =  "172.16.0.0/0"
+    cidr_block =  "0.0.0.0/0"
     from_port = 22
     to_port = 22
   }
@@ -199,7 +199,7 @@ resource "aws_network_acl" "Indusface_Interview_Private_SG" {
     protocol = "tcp"
     rule_no = 101
     action = "allow"
-    cidr_block =  "172.16.0.0/0"
+    cidr_block =  "0.0.0.0/0"
     from_port = 80
     to_port = 80
   }
@@ -208,7 +208,7 @@ resource "aws_network_acl" "Indusface_Interview_Private_SG" {
     protocol = "tcp"
     rule_no = 102
     action = "allow"
-    cidr_block =  "172.16.0.0/0"
+    cidr_block =  "0.0.0.0/0"
     from_port = 443
     to_port = 443
   }
@@ -217,7 +217,7 @@ resource "aws_network_acl" "Indusface_Interview_Private_SG" {
     protocol = "tcp"
     rule_no = 103
     action = "allow"
-    cidr_block =  "172.16.0.0/0"
+    cidr_block =  "0.0.0.0/0"
     from_port = 22
     to_port = 22
   }
@@ -245,7 +245,7 @@ resource "aws_eip" "instance_eip" {
 
 resource "aws_instance" "Indusface_Interview_Load_Balancer" {
   instance_type = "t2.micro"
-  ami = "ami-2581aa40"
+  ami = "ami-5d055232"
 
 root_block_device {
  volume_type = "gp2"
@@ -262,23 +262,6 @@ root_block_device {
 
 }
 
-resource "aws_instance" "Indusface_Interview_Web_Server" {
-  instance_type = "t2.micro"
-  ami = "ami-2581aa40"
-root_block_device {
- volume_type = "gp2"
- volume_size = "20"
- delete_on_termination = "true"
-}
-  tags {
-    Name = "Indusface_Interview_Web_Server"
-  }
-
-  key_name = "${aws_key_pair.auth.id}"
-  
-  subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
-
-}
 
 
 
