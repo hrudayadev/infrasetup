@@ -1,5 +1,5 @@
 aws_profile = "creds"
 aws_region = "ap-south-1"
-key_name = "enckey"
-public_key_path = "/home/ubuntu/enckey.pub"
+key_name = "krypto"
+public_key_path = "/home/ubuntu/krypto.pub"
 
