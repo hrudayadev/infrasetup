@@ -1,0 +1,5 @@
+aws_profile = "creds"
+aws_region = "us-east-2"
+key_name = "enckey"
+public_key_path = "/home/ubuntu/enckey.pub"
+
