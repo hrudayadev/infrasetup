@@ -13,7 +13,7 @@ resource "aws_vpc" "Indusface_Interview_VPC" {
 }
 
 resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
- vpc_id = "{aws_vpc.Indusface_Interview_VPC.id}"
+ vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
  tags {
       Name = "Indusface_Interview_Internet_Gateway"
 }
@@ -26,7 +26,7 @@ resource "aws_subnet" "Indusface_Interview_Public_Subnet" {
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   cidr_block = "172.16.0.0/24"
   map_public_ip_on_launch = true
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-2b"
   tags {
       Name = "Indusface_Interview_Public_Subnet"
 }
@@ -36,7 +36,7 @@ resource "aws_subnet" "Indusface_Interview_Private_Subnet" {
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
   cidr_block = "172.16.1.0/24"
   map_public_ip_on_launch = false
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-2b"
   tags {
       Name = "Indusface_Interview_Private_Subnet"
 }
@@ -245,7 +245,7 @@ resource "aws_eip" "instance_eip" {
 
 resource "aws_instance" "Indusface_Interview_Load_Balancer" {
   instance_type = "t2.micro"
-  ami = "ami-5d055232"
+  ami = "ami-2581aa40"
 
 root_block_device {
  volume_type = "gp2"
