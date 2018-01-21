@@ -7,6 +7,7 @@ provider "aws" {
 
 resource "aws_vpc" "Indusface_Interview_VPC" {
   cidr_block = "172.16.0.0/16"
+  enable_dns_hostnames = true 
   tags = {
     Name = "Indusface_Interview_VPC"
   }
@@ -18,6 +19,7 @@ resource "aws_internet_gateway" "Indusface_Interview_Internet_Gateway" {
       Name = "Indusface_Interview_Internet_Gateway"
 }
 }
+
 
 
 
@@ -67,6 +69,11 @@ resource "aws_route_table"  "Indusface_Interview_Public_Route_Table"  {
 }
 
 
+resource "aws_route" "internet_access" {
+  route_table_id         = "${aws_route_table.Indusface_Interview_Public_Route_Table.id}"
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = "${aws_internet_gateway.Indusface_Interview_Internet_Gateway.id}"
+}
 
 resource "aws_route_table" "Indusface_Interview_Private_Route_Table"  {
  vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
@@ -98,133 +105,73 @@ resource "aws_route_table_association" "Indusface_Interview_Private_Subnet" {
 
 # Security Group 
 
-resource "aws_network_acl" "Indusface_Interview_Public_SG" {
+resource "aws_security_group" "Indusface_Interview_Public_SG" {
+  name = "Indusface_Interview_Public_SG"
+  description = "Used for public and private instances for load balancer access"
   vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
-  subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
 
-  ingress = {
-    protocol = "tcp"
-    rule_no = 100
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 80
-    to_port = 80
+  #SSH 
+
+  ingress {
+    from_port   = 22
+    to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress = {
-    protocol = "tcp"
-    rule_no = 101
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
+  #HTTP 
+
+  ingress {
+    from_port   = 80
+    to_port   = 80
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  #Outbound internet access
+
+  egress {
     from_port = 443
-    to_port = 443
-  }
-
-  ingress = {
-    protocol = "tcp"
-    rule_no = 102
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 22
-    to_port = 22
-  }
-
-  
-
-  egress = {
-    protocol = "tcp"
-    rule_no = 101
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 80
-    to_port = 80
-  }
-
-  egress = {
-    protocol = "tcp"
-    rule_no = 102
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 443
-    to_port = 443
-  }
-
-  egress = {
-    protocol = "tcp"
-    rule_no = 103
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 22
-    to_port = 22
-  }
-}
-  
- 
-
-resource "aws_network_acl" "Indusface_Interview_Private_SG" {
-  vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
-  subnet_id = "${aws_subnet.Indusface_Interview_Private_Subnet.id}"
-
-
-   ingress = {
-    protocol = "tcp"
-    rule_no = 100
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 80
-    to_port = 80
-  }
-
-  ingress = {
-    protocol = "tcp"
-    rule_no = 101
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 443
-    to_port = 443
-  }
-
-  ingress = {
-    protocol = "tcp"
-    rule_no = 102
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 22
-    to_port = 22
-  }
-
-  
-
-  egress = {
-    protocol = "tcp"
-    rule_no = 101
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 80
-    to_port = 80
-  }
-
-  egress = {
-    protocol = "tcp"
-    rule_no = 102
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 443
-    to_port = 443
-  }
-
-  egress = {
-    protocol = "tcp"
-    rule_no = 103
-    action = "allow"
-    cidr_block =  "0.0.0.0/0"
-    from_port = 22
-    to_port = 22
+    to_port   = 443
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 
 
+resource "aws_security_group" "Indusface_Interview_Private_SG" {
+  name = "Indusface_Interview_Private_SG"
+  description = "Used for public and private instances for load balancer access"
+  vpc_id = "${aws_vpc.Indusface_Interview_VPC.id}"
+
+  #SSH 
+
+  ingress {
+    from_port   = 22
+    to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  #HTTP 
+
+  ingress {
+    from_port   = 80
+    to_port   = 80
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  #Outbound internet access
+
+  egress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 
 
 # kep pair
@@ -259,7 +206,13 @@ root_block_device {
   key_name = "${aws_key_pair.auth.id}"
   
   subnet_id = "${aws_subnet.Indusface_Interview_Public_Subnet.id}"
+  vpc_security_group_ids = ["${aws_security_group.Indusface_Interview_Public_SG.id}"]
 
+}
+
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = "${aws_instance.Indusface_Interview_Load_Balancer.id}"
+  allocation_id = "${aws_eip.elastic_eip.id}"
 }
 
 
